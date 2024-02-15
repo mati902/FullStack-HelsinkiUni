@@ -1,12 +1,12 @@
 
 import React, { useState } from 'react';
 
-const Statistics = (props) => {
+/*const Statistics = (props) => {
   good + " " + setGood
   neutral  + " " + setNeutral
   bad + " " + setBad
   all + " " + setAll
-}
+}*/
 
 
 const Button = (props) => (
@@ -21,26 +21,29 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
   const [all, setAll] = useState(0)
-  const Button = (props) => (
-    <button onClick={props.handleClick}>{props.text} </button>
-  )
+  
 
-const setToGood = NewGood => {
+const setToGood = () => {
   console.log("value of good: ", NewGood)
-  setGood(NewGood)
+  const upgood = good + 1
+  setGood(upgood)
+  setAll(upgood + upneutral + upbad)
 }
-const setToNeutral = NewNeutral => {
+const setToNeutral = () => {
   console.log("value of neutral: ", NewNeutral)
-  setNeutral(NewNeutral)
+  const upneutral = bad + 1
+  setNeutral(upneutral)
+  setAll(upgood + upneutral + upbad)
 }
-const setToBad = NewBad => {
+const setToBad = () => {
   console.log("value of bad: ", NewBad)
-  setBad(NewBad)
+  const upbad = bad + 1
+  setBad(upbad)
+  setAll(upgood + upneutral + upbad)
 }
-const setToAll = NewAll => {
-  console.log("value of all: ", NewGood + NewNeutral + NewBad)
-  setAll(NewAll)
-}
+
+
+
   return (
     <div>
       <h2>give feedback</h2>
