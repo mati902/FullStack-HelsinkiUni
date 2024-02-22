@@ -1,5 +1,32 @@
 import { useState } from 'react'
 
+const Course = ({course}) => {
+  return (
+    <div>
+      <h1>{course.name}</h1>
+      <ul>
+        {course.parts.map(part => (
+          <li key={part.id}>
+            {part.name} {part.exercises}
+          </li>
+        ))}
+        <h1>total of  exercises</h1>
+      </ul>
+      
+    </div>
+    
+  );
+
+};
+
+
+/*const Sum = ({course}) => {
+  let total = this.exercises.reduce(course (prev, current) {
+  return prev + +current.exercises;
+}, 0);
+}*/
+
+
 
 
 const App = () => {
@@ -23,9 +50,13 @@ const App = () => {
         id: 3
       }
     ]
+    
   }
 
   return <Course course={course} />
+   
+  
+  
 }
 
 export default App
