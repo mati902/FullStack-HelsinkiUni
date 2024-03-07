@@ -1,45 +1,50 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
-  const [newName, setNewName] = useState('')
+  const [persons, setPersons] = useState([{ name: 'Arto Hellas' }]);
+  const [newName, setNewName] = useState('');
+
+  const addPerson = (e) => {
+    e.preventDefault();
+    const personObject = {
+      name: newName
+    };
+
+    setPersons([...persons, personObject]);
+    setNewName('');
+  };
+
+  const handlePerson = (e) => {
+    setNewName(e.target.value);
 
 
-const addPerson = (e) => {
-  e.preventDefault()
-  console.log("click registered",event.target)
-  const personObject = {
-    content: newName
-  }
+  };
+ 
 
-  newName(persons.concat(personObject))
-  setNewName('')
-}
-
-const handleperson = (e) => {
-  console.log(e.target.value)
-  setPersons(e.target.value)
-}
   return (
     <div>
       <h2>Phonebook</h2>
       <form onSubmit={addPerson}>
         <div>
-          name: <input
-           type="text"
-           onChange={handleperson}
-           />
+          name: 
+          <input
+            type="text"
+            value={newName}
+            onChange={handlePerson}
+          />
         </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      ...
+      <ul>
+        {persons.map((person, index) => (
+          <li key={index}>{person.name}</li>
+        ))}
+      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
