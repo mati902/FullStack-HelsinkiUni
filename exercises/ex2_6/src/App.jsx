@@ -11,6 +11,9 @@ function App() {
   const [ newFilter, setNewFilter ] = useState('')
   const [ siteMessage, setSiteMessage] = useState(null)
   const [ siteMessageType, setSiteMessageType ] = useState('')
+  const [errorMessage, setErrorMessage] = useState('Added ...')
+  const [notes, setNotes] = useState([]) 
+  const [newNote, setNewNote] = useState('')
 
   useEffect(() => {
     personService
@@ -28,6 +31,11 @@ function App() {
       name: newName,
       number: newNumber,
     }
+
+    const Notification = ({ message }) => {
+      if (message === null) {
+        return null
+      }
 
     const existing_names = persons.map(person => person.name)
 
@@ -102,9 +110,29 @@ function App() {
     persons.filter(person => person.name.toLowerCase().includes(newFilter)) :
     persons
 
+    const toggleImportanceOf = id => {
+      const note = notes.find(n => n.id === id)
+      const changedNote = { ...note, important: !note.important }
+  
+      noteService
+        .update(id, changedNote).then(returnedNote => {
+          setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+        })
+        .catch(error => {
+          setErrorMessage(
+            `Note '${note.content}' was already removed from server`
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+          setNotes(notes.filter(n => n.id !== id))
+        })
+    }
+
   return (
     <>
       <div>
+      <Notification message={errorMessage} />
       <h2>Phonebook</h2>
       <Notification msg={siteMessage} type={siteMessageType} />
       filter shown with <input type="text" value={newFilter} onChange={handleFilterChange} />
@@ -132,6 +160,6 @@ function App() {
       
     </>
   )
-}
+}}
 
 export default App
